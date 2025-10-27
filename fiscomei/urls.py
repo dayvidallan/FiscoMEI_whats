@@ -2,6 +2,13 @@
 from django.contrib import admin
 from django.urls import path, include
 
+from django.http import HttpResponse
+
+# --- teste rápido de vida ---
+def wa_ping(request):
+    return HttpResponse("pong")
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('apps.accounts.urls')),
@@ -13,6 +20,7 @@ urlpatterns = [
     path('webhooks/whatsapp/', include('apps.whatsapp.urls')),
     path("", include("apps.whatsapp.urls")),
     path('das_mei/', include('apps.das_mei.urls')),
+    path("assistant-wa/ping", wa_ping),  # teste
     path("assistant-wa/", include("assistant_whatsapp.urls")),
 
 ]
