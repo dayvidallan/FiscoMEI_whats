@@ -13,6 +13,8 @@ urlpatterns = [
     path('webhooks/whatsapp/', include('apps.whatsapp.urls')),
     path("", include("apps.whatsapp.urls")),
     path('das_mei/', include('apps.das_mei.urls')),
+    path("assistant-wa/", include("assistant_whatsapp.urls")),
+
 ]
 
 

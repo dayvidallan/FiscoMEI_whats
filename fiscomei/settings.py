@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "apps.sales",
     "apps.whatsapp",
     "apps.das_mei",
+    "assistant_whatsapp",
+
 ]
 
 MIDDLEWARE = [
