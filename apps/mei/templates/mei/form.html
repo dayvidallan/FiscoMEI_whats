@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+{% block header %}<h1>Cadastro de MEI</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <form method="post">{% csrf_token %}
+    <div class="form-row">
+      {% for field in form %}
+        <div><label>{{ field.label }}{% if field.field.required %} *{% endif %}</label>{{ field }}{% if field.errors %}<div style="color:#b91c1c">{{ field.errors }}</div>{% endif %}</div>
+      {% endfor %}
+    </div>
+    <div style="margin-top:12px"><button class="btn primary" type="submit">Salvar</button></div>
+  </form>
+</div>
+{% endblock %}

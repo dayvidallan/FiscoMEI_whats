@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block header %}<h1>Financeiro</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <form method="get" class="form-row">
+    <div><label>Início</label><input type="date" name="inicio" value="{{ request.GET.inicio }}"></div>
+    <div><label>Fim</label><input type="date" name="fim" value="{{ request.GET.fim }}"></div>
+    <div>
+      <label>Tipo</label>
+      <select name="kind">
+        <option value="">Todos</option>
+        <option value="IN" {% if request.GET.kind == 'IN' %}selected{% endif %}>Entrada</option>
+        <option value="OUT" {% if request.GET.kind == 'OUT' %}selected{% endif %}>Saída</option>
+      </select>
+    </div>
+    <div><label>Categoria</label><input name="category" value="{{ request.GET.category }}"></div>
+    <div><label>Buscar</label><input name="q" value="{{ request.GET.q }}"></div>
+    <div><button class="btn">Filtrar</button>
+      <a class="btn outline" href="{% url 'finance:list' %}">Limpar</a>
+      <a class="btn success" href="{% url 'finance:relatorio_pdf' %}?{{ request.GET.urlencode }}">Gerar PDF</a>
+      <a class="btn primary" href="{% url 'finance:create' %}">Novo lançamento</a>
+    </div>
+  </form>
+</div>
+
+<table class="table">
+  <thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th class="text-right">Valor</th><th>Ações</th></tr></thead>
+  <tbody>
+    {% for t in items %}
+    <tr>
+      <td>{{ t.date|date:"d/m/Y" }}</td>
+      <td>{{ t.get_kind_display }}</td>
+      <td>{{ t.category }}</td>
+      <td>{{ t.description }}</td>
+      <td class="text-right">R$ {{ t.amount|floatformat:2 }}</td>
+      <td class="nowrap">
+        <a class="btn xs success" href="{% url 'finance:recibo' t.pk %}">Recibo</a>
+        <a class="btn xs" href="{% url 'finance:edit' t.pk %}">Editar</a>
+        <a class="btn xs danger" href="{% url 'finance:delete' t.pk %}">Excluir</a>
+      </td>
+    </tr>
+    {% empty %}<tr><td colspan="6">Nenhum lançamento.</td></tr>{% endfor %}
+  </tbody>
+</table>
+
+<div class="totals text-right">
+  <strong>Entradas:</strong> R$ {{ totals.in|floatformat:2 }} |
+  <strong>Saídas:</strong> R$ {{ totals.out|floatformat:2 }} |
+  <strong>Total:</strong> R$ {{ totals.total|floatformat:2 }}
+</div>
+{% endblock %}

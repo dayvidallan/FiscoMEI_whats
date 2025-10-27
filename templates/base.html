@@ -1,0 +1,41 @@
+
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FiscoMEI{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">FiscoMEI</div>
+      <nav>
+        <a href="{% url 'dashboard:index' %}">Dashboard</a>
+        <a href="{% url 'mei:list' %}">MEIs</a>
+        <a href="{% url 'finance:list' %}">Financeiro</a>
+        <a href="{% url 'nfe:index' %}">NF-e</a>
+        <a href="{% url 'das_mei:home' %}">Gerar DAS MEI</a>
+        <a href="{% url 'chat:index' %}">Chat</a>
+        <a href="{% url 'logout' %}">Sair</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <header class="topbar">
+        <div class="title">{% block header %}{% endblock %}</div>
+      </header>
+      <section class="page">
+        {% if messages %}
+          <ul class="messages">
+            {% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+  </div>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

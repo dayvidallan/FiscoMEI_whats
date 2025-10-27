@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtualenv
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Sistema/OS
+.DS_Store
+Thumbs.db
+
+# Secretos
+.env
+*.env
+
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.vscode/
+.idea/
+.env

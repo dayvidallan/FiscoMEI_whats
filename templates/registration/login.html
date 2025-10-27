@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block header %}<h1>Entrar</h1>{% endblock %}
+{% block content %}
+<div class="card" style="max-width:480px">
+  <form method="post">{% csrf_token %}
+    <div class="form-row">
+      <div style="grid-column:1/-1">
+        <label for="id_username">Usuário</label>
+        <input type="text" name="username" autofocus required id="id_username">
+      </div>
+      <div style="grid-column:1/-1">
+        <label for="id_password">Senha</label>
+        <input type="password" name="password" required id="id_password">
+      </div>
+    </div>
+    <div style="margin-top:12px"><button class="btn primary" type="submit">Entrar</button></div>
+    {% if form.errors %}<p style="color:#b91c1c;margin-top:10px">Credenciais inválidas.</p>{% endif %}
+  </form>
+</div>
+{% endblock %}

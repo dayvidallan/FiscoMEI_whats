@@ -1,0 +1,13 @@
+
+{% extends "base.html" %}
+{% block header %}<h1>{{ obj.trade_name|default:obj.owner_name }}</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <strong>CNPJ:</strong> {{ obj.cnpj }}<br>
+  <strong>CPF:</strong> {{ obj.cpf }}<br>
+  <strong>Razão social:</strong> {{ obj.corporate_name }}<br>
+  <strong>Endereço:</strong> {{ obj.address }} - {{ obj.city }}/{{ obj.state }} - {{ obj.cep }}<br>
+  <strong>IM:</strong> {{ obj.im }} | <strong>IE:</strong> {{ obj.ie }}<br>
+  <strong>Regime:</strong> {{ obj.regime }}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block header %}<h1>{% if is_edit %}Editar{% else %}Novo{% endif %} lançamento</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <form method="post">{% csrf_token %}
+    <div class="form-row">
+      {% for field in form %}
+      <div><label>{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="error">{{ field.errors }}</div>{% endif %}</div>
+      {% endfor %}
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn primary" type="submit">Salvar</button>
+      <a class="btn" href="{% url 'finance:list' %}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

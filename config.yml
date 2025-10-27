@@ -1,0 +1,11 @@
+tunnel: f0f2532d-e7ad-4f03-a8ae-8a09812137d6
+credentials-file: C:\Users\Documentos\.cloudflared\f0f2532d-e7ad-4f03-a8ae-8a09812137d6.json
+
+ingress:
+  - hostname: wh.sistemasfisco.com.br
+    service: http://localhost:5000
+  - hostname: mei.sistemasfisco.com.br
+    service: http://localhost:8000
+  - hostname: smile.sistemasfisco.com.br
+    service: http://localhost:8010
+  - service: http_status:404

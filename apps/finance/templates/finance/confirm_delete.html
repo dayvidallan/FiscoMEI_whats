@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block header %}<h1>Excluir lançamento</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <p>Tem certeza que deseja excluir <strong>{{ obj }}</strong>?</p>
+  <form method="post">{% csrf_token %}
+    <button class="btn danger">Excluir</button>
+    <a class="btn" href="{% url 'finance:list' %}">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

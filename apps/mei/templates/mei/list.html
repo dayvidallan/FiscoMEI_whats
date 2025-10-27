@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block header %}<h1>MEIs</h1>{% endblock %}
+{% block content %}
+<p><a class="btn primary" href="{% url 'mei:create' %}">Novo MEI</a></p>
+<table>
+  <thead><tr><th>Nome</th><th>CNPJ</th><th>E-mail</th><th>Ações</th></tr></thead>
+  <tbody>
+    {% for m in items %}
+    <tr>
+      <td><a href="{% url 'mei:detail' m.pk %}">{{ m.trade_name|default:m.owner_name }}</a></td>
+      <td>{{ m.cnpj }}</td>
+      <td>{{ m.email }}</td>
+      <td><a class="btn" href="{% url 'mei:update' m.pk %}">Editar</a></td>
+    </tr>
+    {% empty %}<tr><td colspan="4">Nenhum MEI cadastrado.</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

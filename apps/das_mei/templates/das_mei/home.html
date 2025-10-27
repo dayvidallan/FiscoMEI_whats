@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gerar DAS MEI{% endblock %}
+{% block header %}Gerar DAS MEI{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Geração de DAS</h2>
+    <p>A DAS em aberto identificada é a do mês de <strong>{{ mes_referencia }} de {{ ano_referencia }}</strong>.</p>
+    
+    <div id="confirmation-message">
+        <p>Deseja gerar a DAS do mês de {{ mes_referencia }} de {{ ano_referencia }}?</p>
+        <button id="gerar-das-btn" class="button primary">Sim, Gerar DAS</button>
+    </div>
+
+    <div id="loading-message" style="display: none;">
+        <p>Gerando DAS, por favor aguarde...</p>
+    </div>
+
+    <div id="result-message" style="display: none;">
+        <p id="result-text"></p>
+        <a id="das-link" href="#" target="_blank" class="button secondary" style="display: none;">Acessar DAS</a>
+    </div>
+</div>
+
+<script>
+document.getElementById('gerar-das-btn').addEventListener('click', function() {
+    // Esconde a mensagem de confirmação e mostra a de carregamento
+    document.getElementById('confirmation-message').style.display = 'none';
+    document.getElementById('loading-message').style.display = 'block';
+    document.getElementById('result-message').style.display = 'none';
+    document.getElementById('das-link').style.display = 'none';
+
+    fetch('{% url "das_mei:gerar_das" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: new URLSearchParams({
+            'mes_referencia': '{{ mes_referencia }}',
+            'ano_referencia': '{{ ano_referencia }}'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Esconde a mensagem de carregamento e mostra o resultado
+        document.getElementById('loading-message').style.display = 'none';
+        document.getElementById('result-message').style.display = 'block';
+        document.getElementById('result-text').textContent = data.message;
+
+        if (data.success && data.link_das) {
+            const dasLink = document.getElementById('das-link');
+            dasLink.href = data.link_das;
+            dasLink.style.display = 'inline-block';
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao gerar DAS:', error);
+        document.getElementById('loading-message').style.display = 'none';
+        document.getElementById('result-message').style.display = 'block';
+        document.getElementById('result-text').textContent = 'Ocorreu um erro ao tentar gerar a DAS. Tente novamente mais tarde.';
+    });
+});
+
+// Função auxiliar para obter o cookie CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block header %}<h1>Dashboard</h1>{% endblock %}
+{% block content %}
+<div class="card">
+  <form method="get" class="form-row">
+    <div><label>Início</label><input type="date" name="inicio" value="{{ request.GET.inicio }}"></div>
+    <div><label>Fim</label><input type="date" name="fim" value="{{ request.GET.fim }}"></div>
+    <div>
+      <label>Tipo</label>
+      <select name="kind">
+        <option value="">Todos</option>
+        <option value="IN" {% if request.GET.kind == 'IN' %}selected{% endif %}>Entrada</option>
+        <option value="OUT" {% if request.GET.kind == 'OUT' %}selected{% endif %}>Saída</option>
+      </select>
+    </div>
+    <div><label>Categoria</label><input name="category" value="{{ request.GET.category }}"></div>
+    <div><label>Buscar</label><input name="q" value="{{ request.GET.q }}"></div>
+    <div><button class="btn">Aplicar</button>
+      <a class="btn outline" href="{% url 'dashboard:index' %}">Limpar</a>
+      <a class="btn success" href="{% url 'finance:relatorio_pdf' %}?{{ request.GET.urlencode }}">Gerar PDF</a>
+    </div>
+  </form>
+</div>
+<div class="grid cols-3">
+  <div class="card"><div>Entradas</div><h2>R$ {{ income|floatformat:2 }}</h2></div>
+  <div class="card"><div>Saídas</div><h2>R$ {{ expense|floatformat:2 }}</h2></div>
+  <div class="card"><div>Saldo</div><h2>R$ {{ balance|floatformat:2 }}</h2></div>
+</div>
+{% endblock %}
