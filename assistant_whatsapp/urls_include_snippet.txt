@@ -1,0 +1,7 @@
+
+# settings.py
+INSTALLED_APPS += ["assistant_whatsapp"]
+
+# urls.py
+from django.urls import path, include
+urlpatterns += [ path("assistant-wa/", include("assistant_whatsapp.urls")) ]
