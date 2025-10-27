@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from django.http import HttpResponse
+from assistant_whatsapp.views import webhook_verify, webhook_receive
 
 # --- teste rápido de vida ---
 def wa_ping(request):
@@ -21,7 +22,9 @@ urlpatterns = [
     path("", include("apps.whatsapp.urls")),
     path('das_mei/', include('apps.das_mei.urls')),
     path("assistant-wa/ping", wa_ping),  # teste
-    path("assistant-wa/", include("assistant_whatsapp.urls")),
+    path("assistant-wa/webhooks/whatsapp", webhook_verify),
+    path("assistant-wa/webhooks/whatsapp/", webhook_receive),
+
 
 ]
 
